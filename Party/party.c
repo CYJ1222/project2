@@ -63,7 +63,9 @@ void *student(void *arg) {
     printf("student in the room:%d\n",++stnum);
     pthread_mutex_unlock(&room_mutex);
     sem_post(&waitingstudent);
+    usleep((rand() % 500 + 1000) * 1000);
     party(id);
+    usleep((rand() % 500 + 1000) * 1000);
     student_leave(id);
     printf("student in the room:%d\n",--stnum);
     sem_wait(&studentnum);
