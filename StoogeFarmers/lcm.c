@@ -5,58 +5,96 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
+sem_t shovel;       // 铲子信号量
+sem_t hole_to_seed; //
+sem_t hole_to_fill;
+sem_t unfilled_avalid;
+void *larry()
+{
 
-// semaphores
-// sem_t shovel;
-
-void *larry() {
-    // some code goes here
-    /******************************
     int id = 0;
-    while (1) {
+    while (N > id)
+    {
+        
+
+        sem_wait(&unfilled_avalid);
         sem_wait(&shovel);
-        get_shovel(LARRY);
-
+        //get_shovel(LARRY);
+        sleep(rand() % MAX); // add random delay
         dig(LARRY, ++id);
-        drop_shovel(LARRY);
+
+        //drop_shovel(LARRY);
+
         sem_post(&shovel);
-
-        pthread_exit(0);
+        sem_post(&hole_to_seed);
     }
-    ******************************/
+    pthread_exit(NULL);
 }
 
-void *moe() {
-    // some code goes here
-    /******************************
+void *moe()
+{
     int id = 0;
-    while (1) {
+    while (N > id)
+    {
+        sem_wait(&hole_to_seed);
+        sleep(rand() % MAX); // add random delay
         plant(MOE, ++id);
-        pthread_exit(0);
+        sem_post(&hole_to_fill);
     }
-    ******************************/
+    pthread_exit(NULL);
 }
 
-void *curly() {
-    // some code goes here
-    /******************************
+void *curly()
+{
+
     int id = 0;
-    while (1) {
-        get_shovel(CURLY);
+    while (N > id)
+    {
+        sem_wait(&hole_to_fill);
+        sem_wait(&shovel);
+        //get_shovel(CURLY);
         fill(CURLY, ++id);
-
-        drop_shovel(CURLY);
-        pthread_exit(0);
+        sleep(rand() % MAX); // add random delay
+        //drop_shovel(CURLY);
+        sem_post(&shovel);
+        sem_post(&unfilled_avalid);
     }
-    ******************************/
+    pthread_exit(NULL);
 }
 
-void init() {
+void init()
+{
     // some code goes here
-    // sem_init(&shovel, 0, 1);
+    if (sem_init(&shovel, 0, 1) == -1)
+    {
+        perror("sem_init error");
+        return;
+    }
+    if (sem_init(&hole_to_seed, 0, 0) == -1)
+    {
+        perror("sem_init error");
+        return;
+    }
+    if (sem_init(&hole_to_fill, 0, 0) == -1)
+    {
+        perror("sem_init error");
+        return;
+    }
+    if (sem_init(&unfilled_avalid, 0, MAX) == -1)
+    {
+        perror("sem_init error");
+        return;
+    }
+
+    // sem_init(&shovel, 0, 0);
 }
 
-void destroy() {
+void destroy()
+{
     // some code goes here
-    // sem_destroy(&shovel);
+    sem_destroy(&shovel);
+    sem_destroy(&hole_to_seed);
+    sem_destroy(&hole_to_fill);
+    sem_destroy(&unfilled_avalid);
 }
