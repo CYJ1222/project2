@@ -1,10 +1,10 @@
 {
     "configurations": [
         {
-            "name": "lcm",
+            "name": "party",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/StoogeFarmers/lcm",
+            "program": "${workspaceRoot}/Party/party",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
