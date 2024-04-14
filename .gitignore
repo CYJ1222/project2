@@ -6,3 +6,7 @@ Party/party.o
 StoogeFarmers/res.txt
 StoogeFarmers/runtimes.txt
 StoogeFarmers/test.sh
+.vscode
+Party/party_main.o
+.gitignore
+Party/party.o
