@@ -4,10 +4,10 @@
 #./test.sh
 #
 # Number of runs
-NUM_RUNS=50
-
+NUM_RUNS=1
+#
 # Output file
-OUTPUT_FILE="res.txt"
+OUTPUT_FILE="test.md"
 
 
 # Clear output file
@@ -16,6 +16,6 @@ OUTPUT_FILE="res.txt"
 # Run Copy and ForkCopy multiple times for each buffer size
     for ((i=1; i<=$NUM_RUNS; i++)); do
         echo "Run $i"
-        ./lcm >> $OUTPUT_FILE
+        ./StoogeFarmers/lcm >> $OUTPUT_FILE
+        ./Party/party>> $OUTPUT_FILE
     done
-

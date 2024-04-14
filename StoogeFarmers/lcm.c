@@ -7,31 +7,25 @@
 #include <unistd.h>
 #include <time.h>
 sem_t shovel;       // 铲子信号量
-sem_t hole_to_seed; //
-sem_t hole_to_fill;
-sem_t unfilled_avalid;
+sem_t hole_to_seed; //未种的坑
+sem_t hole_to_fill; //种了但未填坑
+sem_t unfilled_avalid;//所有未填的坑
 void *larry()
 {
-
     int id = 0;
     while (N > id)
     {
-        
-
         sem_wait(&unfilled_avalid);
         sem_wait(&shovel);
         get_shovel(LARRY);
         sleep(rand() % MAX); // add random delay
         dig(LARRY, ++id);
-
         drop_shovel(LARRY);
-
         sem_post(&shovel);
         sem_post(&hole_to_seed);
     }
     pthread_exit(NULL);
 }
-
 void *moe()
 {
     int id = 0;
@@ -44,7 +38,6 @@ void *moe()
     }
     pthread_exit(NULL);
 }
-
 void *curly()
 {
 

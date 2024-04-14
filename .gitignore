@@ -1,8 +1,8 @@
 StoogeFarmers/lcm
 StoogeFarmers/lcm_main.o
 StoogeFarmers/lcm.o
-Party/party
-Party/party.o
+party
+party
 StoogeFarmers/res.txt
 StoogeFarmers/runtimes.txt
 StoogeFarmers/test.sh
