@@ -20,11 +20,11 @@ void *larry()
 
         sem_wait(&unfilled_avalid);
         sem_wait(&shovel);
-        //get_shovel(LARRY);
+        get_shovel(LARRY);
         sleep(rand() % MAX); // add random delay
         dig(LARRY, ++id);
 
-        //drop_shovel(LARRY);
+        drop_shovel(LARRY);
 
         sem_post(&shovel);
         sem_post(&hole_to_seed);
@@ -53,10 +53,10 @@ void *curly()
     {
         sem_wait(&hole_to_fill);
         sem_wait(&shovel);
-        //get_shovel(CURLY);
+        get_shovel(CURLY);
         fill(CURLY, ++id);
         sleep(rand() % MAX); // add random delay
-        //drop_shovel(CURLY);
+        drop_shovel(CURLY);
         sem_post(&shovel);
         sem_post(&unfilled_avalid);
     }

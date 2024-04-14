@@ -9,7 +9,7 @@
 sem_t studentnum;//0
 sem_t waitingstudent;
 pthread_mutex_t room_mutex = PTHREAD_MUTEX_INITIALIZER;
-static int stnum=0;
+//static int stnum=0;
 void *dean() {
     for (int i = 0; i < N; i++) {
         usleep((rand() % 500 + 200) * 1000);
@@ -60,14 +60,14 @@ void *student(void *arg) {
     pthread_mutex_lock(&room_mutex);
     student_enter(id);
     sem_post(&studentnum);
-    printf("student in the room:%d\n",++stnum);
+    //printf("student in the room:%d\n",++stnum);
     pthread_mutex_unlock(&room_mutex);
     sem_post(&waitingstudent);
     usleep((rand() % 500 + 1000) * 1000);
     party(id);
     usleep((rand() % 500 + 1000) * 1000);
     student_leave(id);
-    printf("student in the room:%d\n",--stnum);
+    //printf("student in the room:%d\n",--stnum);
     sem_wait(&studentnum);
     // some code goes here
     pthread_exit(0);
